@@ -1,20 +1,22 @@
 package com.example.jens.jchess;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SquareAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    // private Piece[] lp;
+    private Piece[] lp;
 
-    // Piece currentPiece = null;
+    Piece currentPiece = null;
 
     FrameLayout flcp;
     ImageView imgvcp = null;
@@ -47,18 +49,52 @@ public class SquareAdapter extends BaseAdapter {
 
     static class ViewHolder {
         public ImageView square;
-        public ImageView piece;
+        // public ImageView piece;
+        public TextView pieceText;
     }
 
-
-    public SquareAdapter(Context c /*, Piece[] listPiece, int turn */) {
+    public SquareAdapter(Context c) {
         mContext = c;
         Context context = c.getApplicationContext();
         mInflater = LayoutInflater.from(context);
-        /*
+
+        lp = startPosition();
+        whiteTurn = 0;
+    }
+
+    public SquareAdapter(Context c, Piece[] listPiece, int turn) {
+        mContext = c;
+        Context context = c.getApplicationContext();
+        mInflater = LayoutInflater.from(context);
+
         lp = listPiece;
         whiteTurn = turn;
-        */
+
+    }
+
+    private static Piece[] startPosition() {
+        Piece K = new Piece("White","King");
+        Piece Q = new Piece("White","Queen");
+        Piece R = new Piece("White","Rook");
+        Piece B = new Piece("White","Bishop");
+        Piece N = new Piece("White","Knight");
+        Piece P = new Piece("White","Pawn");
+        Piece k = new Piece("Black","King");
+        Piece q = new Piece("Black","Queen");
+        Piece r = new Piece("Black","Rook");
+        Piece b = new Piece("Black","Bishop");
+        Piece n = new Piece("Black","Knight");
+        Piece p = new Piece("Black","Pawn");
+        Piece e = new Piece();
+
+        return new Piece[]{r,n,b,q,k,b,n,r,
+                                 p,p,p,p,p,p,p,p,
+                                 e,e,e,e,e,e,e,e,
+                                 e,e,e,e,e,e,e,e,
+                                 e,e,e,e,e,e,e,e,
+                                 e,e,e,e,e,e,e,e,
+                                 P,P,P,P,P,P,P,P,
+                                 R,N,B,Q,K,B,N,R,};
     }
 
     @Override
@@ -87,8 +123,10 @@ public class SquareAdapter extends BaseAdapter {
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.square = (ImageView) rowView.findViewById(R.id.square_background);
             viewHolder.square.setImageResource(chessboardIds[position]);
-            viewHolder.piece = (ImageView) rowView.findViewById(R.id.piece);
-            // viewHolder.piece.setImageResource(lp[position].getRessource());
+            //viewHolder.piece = (ImageView) rowView.findViewById(R.id.piece);
+            viewHolder.pieceText = (TextView) rowView.findViewById(R.id.pieceText);
+            viewHolder.pieceText.setText(Html.fromHtml(lp[position].getString()));
+            //viewHolder.piece.setImageResource(lp[position].getResource());
 
             // lp[position].setCurrentSquare(position);
 
@@ -101,11 +139,11 @@ public class SquareAdapter extends BaseAdapter {
         }
 
         ViewHolder holder = (ViewHolder) rowView.getTag();
-
-//      if(lp[position] != null ){
-//          holder.piece.setImageResource(((Piece) lp[position]).getRessource());
-
-//      }
+/*
+        if(lp[position] != null ){
+            holder.piece.setImageResource(((Piece) lp[position]).getResource());
+        }
+        */
 
 
         //      if(currentPiece == null){

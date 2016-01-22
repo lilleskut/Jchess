@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Piece[] startPosition;
+
+
 
         final GridView chessboardGridView =
                 (GridView)findViewById(R.id.chessboard);
